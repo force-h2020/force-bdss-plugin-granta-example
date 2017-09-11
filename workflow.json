@@ -1,0 +1,1 @@
+{"version": "1", "workflow": {"mco": null, "data_sources": [{"model_data": {"__traits_version__": "4.6.0", "attribute_name": "", "column": 0, "url": "", "output_slot_names": [""], "input_slot_maps": [], "login": "", "password": "", "cuba_type_out": "", "row": 0}, "id": "force.bdss.granta.factory.example_data_source"}], "notification_listeners": [], "kpi_calculators": []}}
