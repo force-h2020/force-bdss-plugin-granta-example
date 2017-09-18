@@ -1,7 +1,7 @@
-enthought_example
-=================
+granta_example
+==============
 
 .. toctree::
    :maxdepth: 4
 
-   enthought_example
+   granta_example

@@ -187,4 +187,4 @@ uml:
 .PHONY: apidoc
 apidoc:
 	-rm -rf source/api/
-	sphinx-apidoc -o source/api ../enthought_example
+	sphinx-apidoc -o source/api ../granta_example
