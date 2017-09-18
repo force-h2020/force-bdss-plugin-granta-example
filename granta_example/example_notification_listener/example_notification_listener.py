@@ -1,8 +1,5 @@
 from __future__ import print_function
 import datetime
-import random
-import requests
-import mipy as mi
 
 from force_bdss.api import (
     BaseNotificationListener,
@@ -25,13 +22,9 @@ class ExampleNotificationListener(BaseNotificationListener):
     """
 
     db_key = 'MI_FORCE'
-    source_data_table_name = 'Source Data'
-    test_results_table_name = 'Test Results'
-    test_results_subset_name = "Test Results"
-    test_results_import_folder_name = 'Runs'
-    analysis_date_attribute_name= "Date of Analysis"
-    url = 'http://force.grantami.com/mi_servicelayer/'
-    session = None
+    sourceDataTableName = 'Source Data'
+    testResultsTableName = 'Test Results'
+    testResultsImportFolderName = 'Runs'
 
     #: This method must be reimplemented.
     #: It is called with an event as an argument.
@@ -49,17 +42,49 @@ class ExampleNotificationListener(BaseNotificationListener):
             pass
 
     def _submit_data(self, values):
-        record_name = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        values[self.analysis_date_attribute_name] = datetime.datetime.now().strftime('%Y-%m-%d')
-        mi.storeResults(self.session, self.url, self.db_key, self.test_results_table_name, self.test_results_import_folder_name, self.test_results_subset_name, record_name, values)
+        parent_rec = gdlu.FindRecord(
+            self.session,
+            self.db_key,
+            self.test_results_table_name,
+            self.test_results_import_folder_name)
+
+        fdw = gdlu.FunctionalDataWriter(
+            session=self.session,
+            attributeName="Plot",
+            tableName=self.test_results_table_name,
+            db_key=self.db_key)
+
+        for x, y in values:
+            fdw.AddPoint([x, y])
+
+        series = fdw.CreateSeries()
+
+        importer = gdlu.Importer(
+            self.db_key,
+            self.test_results_table_name,
+            self.session,
+            [self.test_results_table_name]
+        )
+
+        importer.AddAttribute("Plot", series)
+        importer.AddAttribute("Date of Analysis", gdl.DateDataType(
+            value=datetime.datetime.now().strftime('%Y-%m-%d')))
+
+        importer.ExecuteRequest(
+            datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            parent_rec.recordReference)
 
     #: You are not required to override these methods.
     #: They are executing when the BDSS starts up (or ends) and can be
     #: used to setup a database connection once and for all.
     def initialize(self, model):
-        self.session = requests.Session()
-        self.session.auth = (model.login, model.password)
-        self.session.headers.update({'content-type':'text/xml;charset=UTF-8'})
+        domain, username = model.domain_username.split("\\")
+        self.session = gdl.GRANTA_MISession(
+            model.url,
+            username=username,
+            domain=domain,
+            password=model.password
+            )
 
     def finalize(self):
         print("Finalizing")

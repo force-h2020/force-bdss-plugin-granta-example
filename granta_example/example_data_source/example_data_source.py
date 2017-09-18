@@ -1,7 +1,5 @@
-import datetime
-import random
-import requests
-import mipy as mi
+import GRANTA_MIScriptingToolkit as gdl
+import GdlUtils as gdlu
 
 from force_bdss.api import BaseDataSource, DataValue, Slot
 
@@ -24,20 +22,30 @@ class ExampleDataSource(BaseDataSource):
     #: of DataValue instances, whose number must match the number of
     #: output slots.
     def run(self, model, parameters):
-        session = requests.Session()
-        session.auth = (model.login, model.password)
-        session.headers.update({'content-type':'text/xml;charset=UTF-8'})
+        domain, username = model.domain_username.split("\\")
+        session = gdl.GRANTA_MISession(
+            model.url,
+            username=username,
+            domain=domain,
+            password=model.password)
 
-        name = "Row %s, Column %s" % (model.row, model.column)
-        record = mi.recordNameSearch(session, model.url, self.db_key, self.source_data_table_name, name)
-        data = mi.exportRecordData(session, model.url, self.db_key, self.source_data_table_name, record, [model.attribute_name])
+        search_result = gdlu.FindRecord(
+            session,
+            self.db_key,
+            self.sourceDataTableName,
+            "Row %s, Column %s" % (model.row, model.column))
 
-        value = float(data[model.attribute_name].xpath("descendant::gbt:PointDataValue/gbt:Point/gbt:Value", namespaces=mi.ns)[0].text)
+        record_data = gdlu.GetRecordData(
+            session,
+            search_result.recordReference,
+            attribNames=[model.attribute_name])
+
+        values = gdlu.ReadValue(record_data.attributeValues[0])
 
         return [
             DataValue(
                 type=model.cuba_type_out,
-                value=value,
+                value=values[0],
             )]
 
     #: If a data source is a function, the slots are the number of arguments
