@@ -29,7 +29,8 @@ class ExampleDataSource(BaseDataSource):
         session.headers.update({'content-type':'text/xml;charset=UTF-8'})
 
         name = "Row %s, Column %s" % (model.row, model.column)
-        record = mi.recordNameSearch(session, model.url, self.db_key, self.source_data_table_name, name)
+        record = mi.recordNameSearch(session,
+            model.url, self.db_key, self.source_data_table_name, name)
         data = mi.exportRecordData(session, model.url, self.db_key, self.source_data_table_name, record, [model.attribute_name])
 
         value = float(data[model.attribute_name].xpath("descendant::gbt:PointDataValue/gbt:Point/gbt:Value", namespaces=mi.ns)[0].text)
