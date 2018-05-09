@@ -2,7 +2,8 @@ from __future__ import print_function
 import datetime
 import random
 import requests
-import mipy as mi
+import granta_example.mipy as mi
+from traits.api import Instance, List
 
 from force_bdss.api import (
     BaseNotificationListener,
@@ -30,8 +31,9 @@ class ExampleNotificationListener(BaseNotificationListener):
     test_results_subset_name = "Test Results"
     test_results_import_folder_name = 'Runs'
     analysis_date_attribute_name= "Date of Analysis"
-    url = 'http://force.grantami.com/mi_servicelayer/'
-    session = None
+    url = 'https://force.grantami.com/mi_servicelayer/'
+    session = Instance(requests.Session)
+    values = List
 
     #: This method must be reimplemented.
     #: It is called with an event as an argument.

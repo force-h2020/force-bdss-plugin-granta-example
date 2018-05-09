@@ -88,7 +88,7 @@ def updateTag(element, tag):
 def printXML(xml):
     """Pretty print an etree element"""
 
-    print etree.tostring(xml, pretty_print=True)
+    print(etree.tostring(xml, pretty_print=True))
 
 def exportRecordData(s, host, dbKey, tableName, recordRef, attrNames):
     """Export multiple attributes for a single record"""

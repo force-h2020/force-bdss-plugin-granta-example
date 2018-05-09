@@ -1,7 +1,7 @@
 import datetime
 import random
 import requests
-import mipy as mi
+import granta_example.mipy as mi
 
 from force_bdss.api import BaseDataSource, DataValue, Slot
 
@@ -27,7 +27,6 @@ class ExampleDataSource(BaseDataSource):
         session = requests.Session()
         session.auth = (model.login, model.password)
         session.headers.update({'content-type':'text/xml;charset=UTF-8'})
-
         name = "Row %s, Column %s" % (model.row, model.column)
         record = mi.recordNameSearch(session,
             model.url, self.db_key, self.source_data_table_name, name)

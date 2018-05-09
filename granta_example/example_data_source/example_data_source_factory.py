@@ -19,7 +19,7 @@ class ExampleDataSourceFactory(BaseDataSourceFactory):
     #: You are responsible for keeping the second entry unique _across_
     #: all your plugins, present and future. You can use (and are strongly
     #: advised to do so) a uuid. In this case, it's just a readable string.
-    id = String(factory_id("granta", "example_data_source"))
+    id = String(factory_id("granta", "granta_example_data_source"))
 
     #: A readable name of the data source. This will be displayed on
     #: the UI. Choose something meaningful.

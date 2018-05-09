@@ -17,7 +17,7 @@ class ExampleNotificationListenerFactory(BaseNotificationListenerFactory):
 
     #: For all the code following, see the documentation on the example
     #: data source for this
-    id = String(factory_id("granta", "example_notification_listener"))
+    id = String(factory_id("granta", "granta_example_notification_listener"))
 
     name = String("GRANTA example notification listener")
 

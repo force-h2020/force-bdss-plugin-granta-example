@@ -33,7 +33,7 @@ class ExamplePlugin(BaseExtensionPlugin):
     #: The second is a unique string of your liking. Make sure that
     #: is not reused by any of your other plugins. You are fully
     #: responsible for the uniqueness of this second string.
-    id = plugin_id("granta", "example")
+    id = plugin_id("granta", "granta_example")
 
     #: You define these methods to return a list of "factory"
     #: classes. You are free to implement only the methods that
