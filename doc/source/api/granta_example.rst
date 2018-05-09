@@ -13,24 +13,24 @@ Subpackages
 Submodules
 ----------
 
-granta\_example\.example\_plugin module
----------------------------------------
+granta\_example.example\_plugin module
+--------------------------------------
 
 .. automodule:: granta_example.example_plugin
     :members:
     :undoc-members:
     :show-inheritance:
 
-granta\_example\.mipy module
-----------------------------
+granta\_example.mipy module
+---------------------------
 
 .. automodule:: granta_example.mipy
     :members:
     :undoc-members:
     :show-inheritance:
 
-granta\_example\.version module
--------------------------------
+granta\_example.version module
+------------------------------
 
 .. automodule:: granta_example.version
     :members:
