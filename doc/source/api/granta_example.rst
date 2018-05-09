@@ -8,6 +8,7 @@ Subpackages
 
     granta_example.example_data_source
     granta_example.example_notification_listener
+    granta_example.tests
 
 Submodules
 ----------
@@ -16,6 +17,14 @@ granta\_example\.example\_plugin module
 ---------------------------------------
 
 .. automodule:: granta_example.example_plugin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+granta\_example\.mipy module
+----------------------------
+
+.. automodule:: granta_example.mipy
     :members:
     :undoc-members:
     :show-inheritance:
