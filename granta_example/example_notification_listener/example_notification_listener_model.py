@@ -15,6 +15,12 @@ class ExampleNotificationListenerModel(BaseNotificationListenerModel):
     For now, the only way for the BDSS to use notification listeners
     is to modify the workflow file by hand.
     """
-    url = String()
+    url = String('https://force.grantami.com/mi_servicelayer/')
     login = String()
     password = String()
+    db_key = String('MI_FORCE')
+    source_data_table_name = String('Source Data')
+    test_results_table_name = String('Test Results')
+    test_results_subset_name = String("Test Results")
+    test_results_import_folder_name = String('Runs')
+    analysis_date_attribute_name = String("Date of Analysis")

@@ -19,6 +19,11 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     row = Int()
     column = Int()
 
+    db_key = String('MI_FORCE')
+    source_data_table_name = String('Source Data')
+    test_results_table_name = String('Test Results')
+    test_results_import_folder_name = String('Runs')
+
     #: This is an example, still work in progess, of how to handle variable
     #: (customizable) CUBA types, that is, a source that can return a specified
     #: CBUA type.

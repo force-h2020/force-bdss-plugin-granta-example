@@ -10,6 +10,9 @@ from force_bdss.api import (
     MCOFinishEvent,
     MCOProgressEvent
 )
+from granta_example.example_notification_listener\
+    .example_notification_listener_model import \
+    ExampleNotificationListenerModel
 
 
 class ExampleNotificationListener(BaseNotificationListener):
@@ -24,15 +27,9 @@ class ExampleNotificationListener(BaseNotificationListener):
     execution.
     """
 
-    db_key = 'MI_FORCE'
-    source_data_table_name = 'Source Data'
-    test_results_table_name = 'Test Results'
-    test_results_subset_name = "Test Results"
-    test_results_import_folder_name = 'Runs'
-    analysis_date_attribute_name = "Date of Analysis"
-    url = 'https://force.grantami.com/mi_servicelayer/'
-    session = Instance(requests.Session)
-    values = List
+    _model = Instance(ExampleNotificationListenerModel)
+    _session = Instance(requests.Session)
+    _values = List
 
     #: This method must be reimplemented.
     #: It is called with an event as an argument.
@@ -41,25 +38,26 @@ class ExampleNotificationListener(BaseNotificationListener):
     #: payload that can be extracted.
     def deliver(self, event):
         if isinstance(event, MCOStartEvent):
-            self.values = []
+            self._values = []
         elif isinstance(event, MCOProgressEvent):
-            self.values.append((event.input[0], event.output[0]))
+            self._values.append((event.input[0], event.output[0]))
         elif isinstance(event, MCOFinishEvent):
             self._submit_data(self.values)
         else:
             pass
 
     def _submit_data(self, values):
+        """Submits the data to the GRANTA database"""
         record_name = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         values[self.analysis_date_attribute_name] = \
             datetime.datetime.now().strftime('%Y-%m-%d')
         mi.storeResults(
             self.session,
-            self.url,
-            self.db_key,
-            self.test_results_table_name,
-            self.test_results_import_folder_name,
-            self.test_results_subset_name,
+            self._model.url,
+            self._model.db_key,
+            self._model.test_results_table_name,
+            self._model.test_results_import_folder_name,
+            self._model.test_results_subset_name,
             record_name,
             values)
 
@@ -67,11 +65,13 @@ class ExampleNotificationListener(BaseNotificationListener):
     #: They are executing when the BDSS starts up (or ends) and can be
     #: used to setup a database connection once and for all.
     def initialize(self, model):
-        self.session = requests.Session()
-        self.session.auth = (model.login, model.password)
-        self.session.headers.update({
+        self._model = model
+        self._session = requests.Session()
+        self._session.auth = (model.login, model.password)
+        self._session.headers.update({
             'content-type': 'text/xml;charset=UTF-8'
         })
 
     def finalize(self):
-        print("Finalizing")
+        self._model = None
+        self._session.close()

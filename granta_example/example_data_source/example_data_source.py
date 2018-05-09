@@ -9,10 +9,6 @@ class ExampleDataSource(BaseDataSource):
     This data source specifically performs a power operation
     on its input.
     """
-    db_key = 'MI_FORCE'
-    source_data_table_name = 'Source Data'
-    test_results_table_name = 'Test Results'
-    test_results_import_folder_name = 'Runs'
 
     #: This is where your computation happens.
     #: You receive the model, and a list of parameters
@@ -29,11 +25,11 @@ class ExampleDataSource(BaseDataSource):
         })
         name = "Row %s, Column %s" % (model.row, model.column)
         record = mi.recordNameSearch(
-            session, model.url, self.db_key,
-            self.source_data_table_name, name)
+            session, model.url, self.model.db_key,
+            self.model.source_data_table_name, name)
         data = mi.exportRecordData(
-            session, model.url, self.db_key,
-            self.source_data_table_name, record, [model.attribute_name])
+            session, model.url, self.model.db_key,
+            self.model.source_data_table_name, record, [model.attribute_name])
 
         value = float(data[model.attribute_name].xpath(
             "descendant::gbt:PointDataValue/gbt:Point/gbt:Value",
