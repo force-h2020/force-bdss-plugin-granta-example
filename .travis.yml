@@ -14,6 +14,7 @@ before_install:
     - cp edm.yaml $HOME/.edm.yaml
     - edm environments create --version ${PYTHON_VERSION} force 
     - . $HOME/.edm/envs/force/bin/activate 
+    - edm install -y lxml
     - cat requirements/edm_requirements.txt | grep -v "^#" | while read line; do edm install -y `echo $line | awk '{print $1"=="$2}'`; done
 install:
     - pip install -r requirements/requirements.txt
