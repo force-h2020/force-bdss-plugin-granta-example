@@ -25,17 +25,6 @@ class ExampleDataSourceFactory(BaseDataSourceFactory):
     #: the UI. Choose something meaningful.
     name = String("GRANTA Example Data Source")
 
-    #: The following two methods must be implemented.
-    #: They must return the model class for the data source
-    #: and the data source itself, respectively.
-    def create_model(self, model_data=None):
-        """Define this method to generate your model.
-        In general, this boilerplate is enough."""
-        if model_data is None:
-            model_data = {}
+    model_class = ExampleDataSourceModel
 
-        return ExampleDataSourceModel(self, **model_data)
-
-    def create_data_source(self):
-        """Return the Data Source instance."""
-        return ExampleDataSource(self)
+    data_source_class = ExampleDataSource
