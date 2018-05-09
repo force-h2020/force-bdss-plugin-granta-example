@@ -1,6 +1,5 @@
 from __future__ import print_function
 import datetime
-import random
 import requests
 import granta_example.mipy as mi
 from traits.api import Instance, List
@@ -30,7 +29,7 @@ class ExampleNotificationListener(BaseNotificationListener):
     test_results_table_name = 'Test Results'
     test_results_subset_name = "Test Results"
     test_results_import_folder_name = 'Runs'
-    analysis_date_attribute_name= "Date of Analysis"
+    analysis_date_attribute_name = "Date of Analysis"
     url = 'https://force.grantami.com/mi_servicelayer/'
     session = Instance(requests.Session)
     values = List
@@ -52,8 +51,17 @@ class ExampleNotificationListener(BaseNotificationListener):
 
     def _submit_data(self, values):
         record_name = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        values[self.analysis_date_attribute_name] = datetime.datetime.now().strftime('%Y-%m-%d')
-        mi.storeResults(self.session, self.url, self.db_key, self.test_results_table_name, self.test_results_import_folder_name, self.test_results_subset_name, record_name, values)
+        values[self.analysis_date_attribute_name] = \
+            datetime.datetime.now().strftime('%Y-%m-%d')
+        mi.storeResults(
+            self.session,
+            self.url,
+            self.db_key,
+            self.test_results_table_name,
+            self.test_results_import_folder_name,
+            self.test_results_subset_name,
+            record_name,
+            values)
 
     #: You are not required to override these methods.
     #: They are executing when the BDSS starts up (or ends) and can be
@@ -61,7 +69,9 @@ class ExampleNotificationListener(BaseNotificationListener):
     def initialize(self, model):
         self.session = requests.Session()
         self.session.auth = (model.login, model.password)
-        self.session.headers.update({'content-type':'text/xml;charset=UTF-8'})
+        self.session.headers.update({
+            'content-type': 'text/xml;charset=UTF-8'
+        })
 
     def finalize(self):
         print("Finalizing")

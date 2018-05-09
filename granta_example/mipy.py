@@ -6,6 +6,7 @@ Created on Mon Aug 15 11:17:44 2016
 """
 # pylint: disable=C0103
 # pylint: disable=E1101
+# flake8: noqa
 
 from lxml.builder import ElementMaker
 from lxml import etree
@@ -37,6 +38,7 @@ BRW = ElementMaker(namespace=ns['brw'], nsmap=ns)
 HDR = ElementMaker(namespace=ns['hdr'], nsmap=ns)
 
 parser = etree.XMLParser(ns_clean=True, recover=True)
+
 
 def partialTableRef(tableName):
     """Create a partial table refeference based on table name"""

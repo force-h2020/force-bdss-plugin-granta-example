@@ -1,5 +1,3 @@
-import datetime
-import random
 import requests
 import granta_example.mipy as mi
 
@@ -26,13 +24,21 @@ class ExampleDataSource(BaseDataSource):
     def run(self, model, parameters):
         session = requests.Session()
         session.auth = (model.login, model.password)
-        session.headers.update({'content-type':'text/xml;charset=UTF-8'})
+        session.headers.update({
+            'content-type': 'text/xml;charset=UTF-8'
+        })
         name = "Row %s, Column %s" % (model.row, model.column)
-        record = mi.recordNameSearch(session,
-            model.url, self.db_key, self.source_data_table_name, name)
-        data = mi.exportRecordData(session, model.url, self.db_key, self.source_data_table_name, record, [model.attribute_name])
+        record = mi.recordNameSearch(
+            session, model.url, self.db_key,
+            self.source_data_table_name, name)
+        data = mi.exportRecordData(
+            session, model.url, self.db_key,
+            self.source_data_table_name, record, [model.attribute_name])
 
-        value = float(data[model.attribute_name].xpath("descendant::gbt:PointDataValue/gbt:Point/gbt:Value", namespaces=mi.ns)[0].text)
+        value = float(data[model.attribute_name].xpath(
+            "descendant::gbt:PointDataValue/gbt:Point/gbt:Value",
+            namespaces=mi.ns
+        )[0].text)
 
         return [
             DataValue(
