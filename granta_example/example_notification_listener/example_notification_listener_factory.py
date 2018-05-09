@@ -21,11 +21,6 @@ class ExampleNotificationListenerFactory(BaseNotificationListenerFactory):
 
     name = String("GRANTA example notification listener")
 
-    def create_model(self, model_data=None):
-        if model_data is None:
-            model_data = {}
+    model_class = ExampleNotificationListenerModel
 
-        return ExampleNotificationListenerModel(self, **model_data)
-
-    def create_listener(self):
-        return ExampleNotificationListener(self)
+    listener_class = ExampleNotificationListener
