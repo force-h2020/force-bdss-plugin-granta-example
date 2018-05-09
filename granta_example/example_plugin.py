@@ -44,4 +44,3 @@ class ExamplePlugin(BaseExtensionPlugin):
 
     def _notification_listener_factories_default(self):
         return [ExampleNotificationListenerFactory(self)]
-
