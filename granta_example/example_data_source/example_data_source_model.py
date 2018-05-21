@@ -1,4 +1,5 @@
-from traits.api import Int, String, on_trait_change
+from traits.api import Int, Str, Password, on_trait_change
+from traitsui.api import View, Item
 
 from force_bdss.api import BaseDataSourceModel
 
@@ -12,44 +13,31 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     your workflow and do not change as the workflow is computed.
     """
 
-    url = String()
-    login = String()
-    password = String()
-    attribute_name = String()
-    row = Int()
-    column = Int()
+    url = Str("https://force.grantami.com/mi_servicelayer/")
+    login = Str()
+    password = Password()
+    attribute_name = Str("PRESSURE")
+    row = Int(1)
+    column = Int(1)
 
-    db_key = String('MI_FORCE')
-    source_data_table_name = String('Source Data')
-    test_results_table_name = String('Test Results')
-    test_results_import_folder_name = String('Runs')
+    db_key = Str('MI_FORCE')
+    source_data_table_name = Str('Source Data')
 
-    #: This is an example, still work in progess, of how to handle variable
-    #: (customizable) CUBA types, that is, a source that can return a specified
-    #: CBUA type.
-    #: We assume that this data source accepts data having some CUBA type,
-    #: and, potentially after transformation, generates the same or different
-    #: CUBA type. In this case, the CUBA type is specified by the user.
-    #: There are valid instances of this case. For example, if you have a data
-    #: source extracting from a CSV file, there might be no information about
-    #: the type in the file, but you know that it represents a pressure.
-    cuba_type_out = String()
+    cuba_type_out = Str("PRESSURE")
 
-    #: Data sources inputs and outputs may change depending on
-    #: the settings in the model. For example, you might have a configuration
-    #: option that enables some functionality of your data source, and that
-    #: might produce different data as result, or require different data as
-    #: input. It is imperative that you observe the traits that may affect the
-    #: resulting inputs and outputs, and report this fact performing as it is
-    #: done here.
-    #: Note: we might make this more streamlined in the future, so you might
-    #: not need to define this method explicitly.
-    #: For the time being, be aware that you should not put a space
-    #: between individual trait names, so
-    #:
-    #: @on_trait_change("cuba_type_in, cuba_type_out")
-    #:
-    #: might give problems.
     @on_trait_change("cuba_type_out")
     def _notify_changes_slots(self):
         self.changes_slots = True
+
+    def default_traits_view(self):
+        return View(
+            Item("url"),
+            Item("login"),
+            Item("password"),
+            Item("attribute_name"),
+            Item("row"),
+            Item("column"),
+            Item("db_key"),
+            Item("source_data_table_name"),
+            Item("cuba_type_out")
+        )

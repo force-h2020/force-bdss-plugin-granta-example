@@ -42,24 +42,29 @@ class ExampleNotificationListener(BaseNotificationListener):
         elif isinstance(event, MCOProgressEvent):
             self._values.append((event.input[0], event.output[0]))
         elif isinstance(event, MCOFinishEvent):
-            self._submit_data(self.values)
+            self._submit_data(self._values)
         else:
             pass
 
     def _submit_data(self, values):
         """Submits the data to the GRANTA database"""
-        record_name = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        values[self.analysis_date_attribute_name] = \
-            datetime.datetime.now().strftime('%Y-%m-%d')
-        mi.storeResults(
-            self.session,
-            self._model.url,
-            self._model.db_key,
-            self._model.test_results_table_name,
-            self._model.test_results_import_folder_name,
-            self._model.test_results_subset_name,
-            record_name,
-            values)
+        curtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        curdate = datetime.datetime.now().strftime('%Y-%m-%d')
+        packet = {}
+        for index, value in enumerate(values):
+            record_name = curtime
+            packet[self._model.analysis_date_attribute_name] = curdate
+            packet["KPI 1"] = value[0]
+            packet["KPI 1"] = value[1]
+            mi.storeResults(
+                self._session,
+                self._model.url,
+                self._model.db_key,
+                self._model.test_results_table_name,
+                self._model.test_results_import_folder_name,
+                self._model.test_results_subset_name,
+                record_name,
+                packet)
 
     #: You are not required to override these methods.
     #: They are executing when the BDSS starts up (or ends) and can be

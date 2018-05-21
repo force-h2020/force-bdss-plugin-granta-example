@@ -1,23 +1,15 @@
+import logging
 import requests
 import granta_example.mipy as mi
 
 from force_bdss.api import BaseDataSource, DataValue, Slot
 
+logger = logging.getLogger(__name__)
+
 
 class ExampleDataSource(BaseDataSource):
-    """Defines an example data source.
-    This data source specifically performs a power operation
-    on its input.
-    """
-
-    #: This is where your computation happens.
-    #: You receive the model, and a list of parameters
-    #: that come from the MCO.
-    #: Parameters are not plain numbers, but are instead instances
-    #: of the DataValue class. This method must return a list
-    #: of DataValue instances, whose number must match the number of
-    #: output slots.
     def run(self, model, parameters):
+        logger.info("Executing ExampleDataSource")
         session = requests.Session()
         session.auth = (model.login, model.password)
         session.headers.update({
@@ -25,16 +17,17 @@ class ExampleDataSource(BaseDataSource):
         })
         name = "Row %s, Column %s" % (model.row, model.column)
         record = mi.recordNameSearch(
-            session, model.url, self.model.db_key,
-            self.model.source_data_table_name, name)
+            session, model.url, model.db_key,
+            model.source_data_table_name, name)
         data = mi.exportRecordData(
-            session, model.url, self.model.db_key,
-            self.model.source_data_table_name, record, [model.attribute_name])
+            session, model.url, model.db_key,
+            model.source_data_table_name, record, [model.attribute_name])
 
         value = float(data[model.attribute_name].xpath(
             "descendant::gbt:PointDataValue/gbt:Point/gbt:Value",
             namespaces=mi.ns
         )[0].text)
+        logger.info("Obtained data value: {}".format(value))
 
         return [
             DataValue(
@@ -42,23 +35,6 @@ class ExampleDataSource(BaseDataSource):
                 value=value,
             )]
 
-    #: If a data source is a function, the slots are the number of arguments
-    #: it takes as input, and the number of entities it returns as output.
-    #: This method must return a tuple of tuples. (input_tuple, output_tuple)
-    #: Each tuple contains Slot instances. You can decide this information
-    #: according to the model content, therefore if your data source returns
-    #: different data depending on its settings, you can definitely handle
-    #: this case.
-    #: In this case, the data source is like a function
-    #:
-    #:                    a = pow(b)
-    #:
-    #: so it has one input slot and one output slot.
-    #: a function like
-    #:
-    #:                a, b = func(m,n,o)
-    #:
-    #: has three input slots and two output slots.
     def slots(self, model):
         return (
             (
