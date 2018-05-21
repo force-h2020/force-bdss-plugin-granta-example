@@ -52,10 +52,10 @@ class ExampleNotificationListener(BaseNotificationListener):
         curdate = datetime.datetime.now().strftime('%Y-%m-%d')
         packet = {}
         for index, value in enumerate(values):
-            record_name = curtime
+            record_name = curdate+"-"+str(index)
             packet[self._model.analysis_date_attribute_name] = curdate
             packet["KPI 1"] = value[0]
-            packet["KPI 1"] = value[1]
+            packet["KPI 2"] = value[1]
             mi.storeResults(
                 self._session,
                 self._model.url,
