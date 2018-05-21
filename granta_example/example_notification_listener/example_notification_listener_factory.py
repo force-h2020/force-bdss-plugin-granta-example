@@ -1,8 +1,4 @@
-from traits.api import String
-
-from force_bdss.api import (
-    factory_id,
-    BaseNotificationListenerFactory)
+from force_bdss.api import BaseNotificationListenerFactory
 
 from .example_notification_listener import ExampleNotificationListener
 from .example_notification_listener_model import \
@@ -10,17 +6,14 @@ from .example_notification_listener_model import \
 
 
 class ExampleNotificationListenerFactory(BaseNotificationListenerFactory):
-    """This is the factory of the notification listener.
-    A notification listener listens to events provided by the MCO,
-    and performs operations accordingly.
-    """
+    def get_identifier(self):
+        return "granta_data_submitter"
 
-    #: For all the code following, see the documentation on the example
-    #: data source for this
-    id = String(factory_id("granta", "granta_example_notification_listener"))
+    def get_name(self):
+        return "GRANTA Data Submitter"
 
-    name = String("GRANTA example notification listener")
+    def get_model_class(self):
+        return ExampleNotificationListenerModel
 
-    model_class = ExampleNotificationListenerModel
-
-    listener_class = ExampleNotificationListener
+    def get_listener_class(self):
+        return ExampleNotificationListener
