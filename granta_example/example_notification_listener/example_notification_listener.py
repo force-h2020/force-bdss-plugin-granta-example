@@ -16,26 +16,10 @@ from granta_example.example_notification_listener\
 
 
 class ExampleNotificationListener(BaseNotificationListener):
-    """The notification listener will receive events as provided
-    by the force_bdss API.
-    At the moment, the following events are reported:
-
-    MCOStartEvent: Emitted when the MCO has just started.
-    MCOProgressEvent: Emitted when the MCO has generated
-    a point that is a relevant result worth of output.
-    MCOFinishEvent: Emitted when the MCO has concluded its
-    execution.
-    """
-
     _model = Instance(ExampleNotificationListenerModel)
     _session = Instance(requests.Session)
     _values = List
 
-    #: This method must be reimplemented.
-    #: It is called with an event as an argument.
-    #: This implementation just prints the name of the event class.
-    #: and its contents (if available). Each event carries a specific
-    #: payload that can be extracted.
     def deliver(self, event):
         if isinstance(event, MCOStartEvent):
             self._values = []
@@ -66,9 +50,6 @@ class ExampleNotificationListener(BaseNotificationListener):
                 record_name,
                 packet)
 
-    #: You are not required to override these methods.
-    #: They are executing when the BDSS starts up (or ends) and can be
-    #: used to setup a database connection once and for all.
     def initialize(self, model):
         self._model = model
         self._session = requests.Session()
