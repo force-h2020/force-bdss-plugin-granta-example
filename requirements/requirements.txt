@@ -1,1 +1,2 @@
 git+git://github.com/force-h2020/force-bdss.git
+requests
