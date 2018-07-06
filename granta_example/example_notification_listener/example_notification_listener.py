@@ -32,7 +32,6 @@ class ExampleNotificationListener(BaseNotificationListener):
 
     def _submit_data(self, values):
         """Submits the data to the GRANTA database"""
-        curtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         curdate = datetime.datetime.now().strftime('%Y-%m-%d')
         packet = {}
         for index, value in enumerate(values):
