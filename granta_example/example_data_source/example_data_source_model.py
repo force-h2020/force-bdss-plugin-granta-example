@@ -13,14 +13,15 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     your workflow and do not change as the workflow is computed.
     """
 
-    url = Str("https://force.grantami.com/mi_servicelayer/")
+    url = Str("https://212.44.35.85/mi_servicelayer/")
     login = Str()
     password = Password()
+    domain = Str()
     attribute_name = Str("PRESSURE")
     row = Int(1)
     column = Int(1)
 
-    db_key = Str('MI_FORCE')
+    db_key = Str('MI_Force')
     source_data_table_name = Str('Source Data')
 
     cuba_type_out = Str("PRESSURE")

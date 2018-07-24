@@ -22,9 +22,9 @@ class ExampleNotificationListener(BaseNotificationListener):
 
     def deliver(self, event):
         if isinstance(event, MCOStartEvent):
-            self._names = event.input_names + event.output_names
+            self._names = list(event.input_names + event.output_names)
         elif isinstance(event, MCOProgressEvent):
-            self._values.append(event.input + event.output)
+            self._values.append(list(event.input + event.output))
         elif isinstance(event, MCOFinishEvent):
             self._submit_data(self._values)
         else:
