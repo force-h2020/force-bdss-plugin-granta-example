@@ -61,7 +61,7 @@ class ExampleNotificationListener(BaseNotificationListener):
                     "Date of Analysis": curdate,
                     "Reaction Time": named_row[model.reaction_time_name],
                     "Volume a tilde": named_row[model.volume_a_tilde_name],
-                    "Impurity concentration":
+                    "Impurity Concentration":
                         named_row[model.impurity_concentration_name],
                     "Temperature": named_row[model.temperature_name]
                 }
