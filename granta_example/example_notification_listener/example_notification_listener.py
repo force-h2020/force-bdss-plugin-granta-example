@@ -33,8 +33,8 @@ class ExampleNotificationListener(BaseNotificationListener):
     def _submit_data(self, values):
         """Submits the data to the GRANTA database"""
         model = self._model
-        table = self._mi.get_db(db_key=self._model.db_key).get_table(
-            self.model._table_name)
+        table = self._mi.get_db(db_key=model.db_key).get_table(
+            model.table_name)
 
         curdate = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:S')
         parent = table
@@ -43,7 +43,7 @@ class ExampleNotificationListener(BaseNotificationListener):
         with self._mi.make_writer() as writer:
             data = {}
             writer.make_record(
-                sn, parent, data, subset_names=[self._model.subset_name])
+                sn, parent, data, subset_names=[model.subset_name])
 
         parent = table.records_with_name(sn)[0]
         with self._mi.make_writer() as writer:
