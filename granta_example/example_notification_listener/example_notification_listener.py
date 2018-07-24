@@ -36,9 +36,9 @@ class ExampleNotificationListener(BaseNotificationListener):
         table = self._mi.get_db(db_key=model.db_key).get_table(
             model.table_name)
 
-        curdate = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:S')
+        curtime = datetime.datetime.now()
         parent = table
-        sn = "Optimization_"+curdate
+        sn = "Optimization_"+curtime.strftime('%Y-%m-%d %H:%M:%S')
 
         with self._mi.make_writer() as writer:
             data = {}
@@ -58,14 +58,13 @@ class ExampleNotificationListener(BaseNotificationListener):
                     "Concentration e": named_row[model.concentration_e_name],
                     "Material Cost": named_row[model.material_cost_name],
                     "Production Cost": named_row[model.production_cost_name],
-                    "Date of Analysis": curdate,
+                    "Date of Analysis": curtime.strftime('%Y-%m-%d'),
                     "Reaction Time": named_row[model.reaction_time_name],
                     "Volume a tilde": named_row[model.volume_a_tilde_name],
-                    "Impurity concentration":
+                    "Impurity Concentration":
                         named_row[model.impurity_concentration_name],
                     "Temperature": named_row[model.temperature_name]
                 }
-
                 writer.make_record(
                     point,
                     parent,
