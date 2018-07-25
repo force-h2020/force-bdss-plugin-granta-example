@@ -9,11 +9,6 @@ from setuptools import setup, find_packages
 VERSION = "0.0.2"
 
 
-# Read description
-with open('README.rst', 'r') as readme:
-    README_TEXT = readme.read()
-
-
 def write_version_py():
     filename = os.path.join(
         os.path.dirname(__file__),
