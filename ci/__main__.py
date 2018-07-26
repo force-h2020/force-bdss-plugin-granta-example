@@ -53,6 +53,16 @@ def install(python_version):
         "pip", "install", "-e", "."])
 
 
+@cli.command(name="install-dummy-granta", help="Installs a dummy version "
+                                               "of the GRANTA library")
+@python_version_option
+def install_dummy_granta(python_version):
+    env_name = get_env_name(python_version)
+    check_call([
+        "edm", "run", "-e", env_name, "--",
+        "pip", "install", "dummy/granta"])
+
+
 @cli.command(help="Run the tests")
 @python_version_option
 def test(python_version):

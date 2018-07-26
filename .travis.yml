@@ -15,8 +15,9 @@ before_install:
     - edm install -y -e force-bootstrap click setuptools
     - git clone -b 0.2.0 git://github.com/force-h2020/force-bdss.git
     - pushd force-bdss && edm run -e force-bootstrap -- python -m ci build-env --python-version ${PYTHON_VERSION} && popd
-    - edm run -e force-bootstrap -- python -m ci install --python-version ${PYTHON_VERSION}
+    - edm run -e force-bootstrap -- python -m ci install-dummy-granta --python-version ${PYTHON_VERSION}
 script:
+    - edm run -e force-bootstrap -- python -m ci install --python-version ${PYTHON_VERSION}
     - edm run -e force-bootstrap -- python -m ci flake8 --python-version ${PYTHON_VERSION}
     - edm run -e force-bootstrap -- python -m ci test --python-version ${PYTHON_VERSION}
     - edm run -e force-bootstrap -- python -m ci docs --python-version ${PYTHON_VERSION}
