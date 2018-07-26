@@ -13,7 +13,7 @@ before_install:
     - export PATH=${HOME}/edm/bin:${PATH}
     - cp edm.yaml $HOME/.edm.yaml
     - edm install -y -e force-bootstrap click setuptools
-    - git clone git://github.com/force-h2020/force-bdss.git
+    - git clone -b 0.2.0 git://github.com/force-h2020/force-bdss.git
     - pushd force-bdss && edm run -e force-bootstrap -- python -m ci build-env --python-version ${PYTHON_VERSION} && popd
     - edm run -e force-bootstrap -- python -m ci install --python-version ${PYTHON_VERSION}
 script:
