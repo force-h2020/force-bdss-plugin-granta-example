@@ -11,7 +11,7 @@ before_install:
     - cp edm.yaml $HOME/.edm.yaml
     - edm install -y click setuptools
     - git clone -b master git://github.com/force-h2020/force-bdss.git
-    - pushd force-bdss && edm run -- python -m ci build-env
+    - pushd force-bdss && edm run -- python -m ci build-env && popd
     - edm run -- python -m ci install-dummy-granta
 script:
     - edm run -- python -m ci install
