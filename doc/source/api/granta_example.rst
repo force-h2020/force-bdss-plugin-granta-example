@@ -21,26 +21,10 @@ granta\_example\.example\_plugin module
     :undoc-members:
     :show-inheritance:
 
-granta\_example\.retrieve module
---------------------------------
-
-.. automodule:: granta_example.retrieve
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 granta\_example\.version module
 -------------------------------
 
 .. automodule:: granta_example.version
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-granta\_example\.x module
--------------------------
-
-.. automodule:: granta_example.x
     :members:
     :undoc-members:
     :show-inheritance:
