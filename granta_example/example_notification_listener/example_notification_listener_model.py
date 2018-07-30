@@ -1,27 +1,27 @@
-from traits.api import Str, Password
+from traits.api import Unicode, Password
 from traitsui.api import View, Item
 from force_bdss.api import BaseNotificationListenerModel
 
 
 class ExampleNotificationListenerModel(BaseNotificationListenerModel):
-    url = Str('https://212.44.35.85/mi_servicelayer/')
-    login = Str()
+    url = Unicode('https://212.44.35.85/mi_servicelayer/')
+    login = Unicode()
     password = Password()
-    domain = Str()
-    db_key = Str('MI_Force')
-    table_name = Str('Optimization Tests')
-    subset_name = Str("Optimization Tests")
+    domain = Unicode()
+    db_key = Unicode('MI_Force')
+    table_name = Unicode('Optimization Tests')
+    subset_name = Unicode("Optimization Tests")
 
     # Input params
-    volume_a_tilde_name = Str()
-    concentration_e_name = Str()
-    reaction_time_name = Str()
-    temperature_name = Str()
+    volume_a_tilde_name = Unicode()
+    concentration_e_name = Unicode()
+    reaction_time_name = Unicode()
+    temperature_name = Unicode()
 
     # KPIs
-    material_cost_name = Str()
-    production_cost_name = Str()
-    impurity_concentration_name = Str()
+    material_cost_name = Unicode()
+    production_cost_name = Unicode()
+    impurity_concentration_name = Unicode()
 
     def default_traits_view(self):
         return View(
