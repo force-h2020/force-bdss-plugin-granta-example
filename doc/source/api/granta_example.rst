@@ -8,7 +8,6 @@ Subpackages
 
     granta_example.example_data_source
     granta_example.example_notification_listener
-    granta_example.tests
 
 Submodules
 ----------
