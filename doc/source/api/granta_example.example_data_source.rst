@@ -1,13 +1,6 @@
 granta\_example\.example\_data\_source package
 ==============================================
 
-Subpackages
------------
-
-.. toctree::
-
-    granta_example.example_data_source.tests
-
 Submodules
 ----------
 
