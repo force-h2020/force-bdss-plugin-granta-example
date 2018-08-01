@@ -1,13 +1,6 @@
 granta\_example\.example\_notification\_listener package
 ========================================================
 
-Subpackages
------------
-
-.. toctree::
-
-    granta_example.example_notification_listener.tests
-
 Submodules
 ----------
 
