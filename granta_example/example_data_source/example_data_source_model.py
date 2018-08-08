@@ -1,4 +1,4 @@
-from traits.api import Int, Str, Password, on_trait_change
+from traits.api import Int, Unicode, Password, on_trait_change
 from traitsui.api import View, Item
 
 from force_bdss.api import BaseDataSourceModel
@@ -13,18 +13,18 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     your workflow and do not change as the workflow is computed.
     """
 
-    url = Str("https://212.44.35.85/mi_servicelayer/")
-    login = Str()
+    url = Unicode("https://212.44.35.85/mi_servicelayer/")
+    login = Unicode()
     password = Password()
-    domain = Str()
-    attribute_name = Str("PRESSURE")
+    domain = Unicode()
+    attribute_name = Unicode("PRESSURE")
     row = Int(1)
     column = Int(1)
 
-    db_key = Str('MI_Force')
-    source_data_table_name = Str('Source Data')
+    db_key = Unicode('MI_Force')
+    source_data_table_name = Unicode('Source Data')
 
-    cuba_type_out = Str("PRESSURE")
+    cuba_type_out = Unicode("PRESSURE")
 
     @on_trait_change("cuba_type_out")
     def _notify_changes_slots(self):
