@@ -21,9 +21,17 @@ class ExampleNotificationListener(BaseNotificationListener):
 
     def deliver(self, event):
         if isinstance(event, MCOStartEvent):
-            self._names = list(event.input_names + event.output_names)
+            value_names = list(event.parameter_names)
+            for kpi_name in event.kpi_names:
+                value_names.extend([kpi_name, kpi_name + "_weight"])
+            self._names = value_names
         elif isinstance(event, MCOProgressEvent):
-            self._values.append(list(event.input + event.output))
+            data = [dv.value for dv in event.optimal_point]
+            for kpi, weight in zip(event.optimal_kpis, event.weights):
+                data.extend([kpi.value, weight])
+            data = tuple(map(float, data))
+            print('data:', data)
+            self._values.append(data)
         elif isinstance(event, MCOFinishEvent):
             self._submit_data(self._values)
         else:
@@ -31,7 +39,9 @@ class ExampleNotificationListener(BaseNotificationListener):
 
     def _submit_data(self, values):
         """Submits the data to the GRANTA database"""
+        print('submitting data')
         model = self._model
+        print (self._mi.dbs)
         table = self._mi.get_db(db_key=model.db_key).get_table(
             model.table_name)
 
@@ -53,25 +63,34 @@ class ExampleNotificationListener(BaseNotificationListener):
 
                 named_row = dict(zip(self._names, row))
                 point = "Point_"+str(index)
-                data = {
-                    "Concentration e": named_row[model.concentration_e_name],
-                    "Material Cost": named_row[model.material_cost_name],
-                    "Production Cost": named_row[model.production_cost_name],
-                    "Date of Analysis": curtime.strftime('%Y-%m-%d'),
-                    "Reaction Time": named_row[model.reaction_time_name],
-                    "Volume a tilde": named_row[model.volume_a_tilde_name],
-                    "Impurity Concentration":
-                        named_row[model.impurity_concentration_name],
-                    "Temperature": named_row[model.temperature_name]
-                }
+                data = {}
+                for kpi_name in model.kpi_names:
+                    data[kpi_name] = named_row[kpi_name]
+                    data[kpi_name+'_weight'] = named_row[kpi_name]
+                for input_name in model.input_names:
+                    data[input_name] = named_row[input_name]
+                # data = {
+                #     "Concentration e": named_row[model.concentration_e_name],
+                #     "Material Cost": named_row[model.material_cost_name],
+                #     "Production Cost": named_row[model.production_cost_name],
+                #     "Date of Analysis": curtime.strftime('%Y-%m-%d'),
+                #     "Reaction Time": named_row[model.reaction_time_name],
+                #     "Volume a tilde": named_row[model.volume_a_tilde_name],
+                #     "Impurity Concentration":
+                #         named_row[model.impurity_concentration_name],
+                #     "Temperature": named_row[model.temperature_name]
+                # }
+
                 writer.make_record(
                     point,
                     parent,
                     data,
                     subset_names=[self._model.subset_name]
                 )
+        print('submitting data done')
 
     def initialize(self, model):
+        print('Init')
         self._model = model
         self._mi = granta.MI(
             model.url,
