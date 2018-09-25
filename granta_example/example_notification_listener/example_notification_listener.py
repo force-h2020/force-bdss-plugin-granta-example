@@ -1,6 +1,6 @@
 import datetime
 import granta
-from traits.api import Instance, List, Any
+from traits.api import Instance, List, Any, on_trait_change
 
 from force_bdss.api import (
     BaseNotificationListener,
@@ -57,30 +57,20 @@ class ExampleNotificationListener(BaseNotificationListener):
         parent = table.records_with_name(sn)[0]
         with self._mi.make_writer() as writer:
             for index, row in enumerate(self._values):
-                if len(row) != len(self._names):
-                    raise ValueError(
-                        "Inconsistent size between names and values")
-
+                # if len(row) != len(self._names):
+                #     raise ValueError(
+                #         "Inconsistent size between names and values")
+                #
                 named_row = dict(zip(self._names, row))
                 point = "Point_"+str(index)
                 data = {}
+                print (named_row)
                 for kpi_name in model.kpi_names:
-                    data[kpi_name] = named_row[kpi_name]
-                    data[kpi_name+'_weight'] = named_row[kpi_name]
+                    data[model.kpi_names[kpi_name]] = named_row[kpi_name]
+                    data[model.kpi_names[kpi_name]+' weight'] = named_row[kpi_name+'_weight']
                 for input_name in model.input_names:
-                    data[input_name] = named_row[input_name]
-                # data = {
-                #     "Concentration e": named_row[model.concentration_e_name],
-                #     "Material Cost": named_row[model.material_cost_name],
-                #     "Production Cost": named_row[model.production_cost_name],
-                #     "Date of Analysis": curtime.strftime('%Y-%m-%d'),
-                #     "Reaction Time": named_row[model.reaction_time_name],
-                #     "Volume a tilde": named_row[model.volume_a_tilde_name],
-                #     "Impurity Concentration":
-                #         named_row[model.impurity_concentration_name],
-                #     "Temperature": named_row[model.temperature_name]
-                # }
-
+                    data[model.input_names[input_name]] = named_row[input_name]
+                print (data)
                 writer.make_record(
                     point,
                     parent,

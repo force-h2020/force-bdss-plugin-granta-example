@@ -9,7 +9,7 @@ class ExampleDataSourceFactory(BaseDataSourceFactory):
         return "data_retriever"
 
     def get_name(self):
-        return "GRANTA Data Retriever (TODO)"
+        return "GRANTA Data Retriever (Test)"
 
     def get_model_class(self):
         return ExampleDataSourceModel
