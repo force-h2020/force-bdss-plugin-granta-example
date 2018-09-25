@@ -1,4 +1,4 @@
-from traits.api import Int, Unicode, Password, on_trait_change
+from traits.api import Int, Unicode, Password, on_trait_change, Float
 from traitsui.api import View, Item
 
 from force_bdss.api import BaseDataSourceModel
@@ -17,14 +17,14 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     login = Unicode()
     password = Password()
     domain = Unicode()
-    attribute_name = Unicode("PRESSURE")
+    attribute_name = Unicode("reactor_volume")
     row = Int(1)
     column = Int(1)
 
     db_key = Unicode('MI_Force')
     source_data_table_name = Unicode('Source Data')
 
-    cuba_type_out = Unicode("PRESSURE")
+    cuba_type_out = Unicode("VOLUME")
 
     @on_trait_change("cuba_type_out")
     def _notify_changes_slots(self):
@@ -35,10 +35,13 @@ class ExampleDataSourceModel(BaseDataSourceModel):
             Item("url"),
             Item("login"),
             Item("password"),
+
             Item("attribute_name"),
             Item("row"),
             Item("column"),
+            Item("cuba_type_out"),
+
             Item("db_key"),
             Item("source_data_table_name"),
-            Item("cuba_type_out")
+
         )
