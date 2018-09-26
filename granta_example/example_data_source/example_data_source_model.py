@@ -13,35 +13,25 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     your workflow and do not change as the workflow is computed.
     """
 
-    url = Unicode("https://212.44.35.85/mi_servicelayer/")
+    db_key = Unicode('MI_FORCE_TESTING')
+    url = Unicode('https://212.44.35.85/mi_servicelayer/')
     login = Unicode()
     password = Password()
-    domain = Unicode()
-    attribute_name = Unicode("reactor_volume")
-    row = Int(1)
-    column = Int(1)
+    domain = Unicode("PLANETARIUM")
+    table_name = Unicode("Reaction Kinetics")
 
-    db_key = Unicode('MI_Force')
-    source_data_table_name = Unicode('Source Data')
+    cuba_type_out = Unicode("ARRHENIUS_DELTA_H")
 
-    cuba_type_out = Unicode("VOLUME")
+    traits_view = View(
+        Item("url"),
+        Item("login"),
+        Item("password"),
+        Item("db_key"),
+        Item("domain"),
+        Item("table_name"),
+        Item("cuba_type_out")
+    )
 
     @on_trait_change("cuba_type_out")
     def _notify_changes_slots(self):
         self.changes_slots = True
-
-    def default_traits_view(self):
-        return View(
-            Item("url"),
-            Item("login"),
-            Item("password"),
-
-            Item("attribute_name"),
-            Item("row"),
-            Item("column"),
-            Item("cuba_type_out"),
-
-            Item("db_key"),
-            Item("source_data_table_name"),
-
-        )
