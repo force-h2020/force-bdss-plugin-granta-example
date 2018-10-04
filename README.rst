@@ -5,7 +5,7 @@ The GRANTA plugin depends on external libraries provided by GRANTA:
 - MIScriptingToolkit: a low level access to the GRANTA MI database
 - granta: a higher level interface to the same database, providing a more user friendly API.
 
-Both these libraries are available from GRANTA, and are only available for Linux.
+Both these libraries are available from GRANTA.
 To install them, and this plugin, you must:
 
 - be in the edm bootstrap environment (generally called edm), using `edm shell`.
