@@ -2,8 +2,8 @@ import sys
 import click
 from subprocess import check_call
 
-DEFAULT_PYTHON_VERSION = "3.5"
-PYTHON_VERSIONS = ["3.5"]
+DEFAULT_PYTHON_VERSION = "3.6"
+PYTHON_VERSIONS = ["3.6"]
 
 ADDITIONAL_CORE_DEPS = [
     'requests==2.18.4-1'
