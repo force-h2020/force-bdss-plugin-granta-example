@@ -33,7 +33,7 @@ setup(
     entry_points={
         "force.bdss.extensions": [
             "granta_example = "
-            "granta_example.example_plugin:ExamplePlugin",
+            "granta_example.example_plugin:GrantaPlugin",
         ]
     },
     packages=find_packages(),
