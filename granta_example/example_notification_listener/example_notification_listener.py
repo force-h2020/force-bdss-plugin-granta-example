@@ -1,22 +1,26 @@
 import datetime
-import granta
-from traits.api import Instance, List, Any
+
+from traits.api import Instance, List
 
 from force_bdss.api import (
-    BaseNotificationListener,
     MCOStartEvent,
     MCOFinishEvent,
     MCOProgressEvent
 )
-from granta_example.example_notification_listener\
-    .example_notification_listener_model import \
-    ExampleNotificationListenerModel
+
+from granta_example.core.base_classes import (
+    BaseGrantaNotificationListener)
+
+from .example_notification_listener_model import (
+    ExampleNotificationListenerModel)
 
 
-class ExampleNotificationListener(BaseNotificationListener):
+class ExampleNotificationListener(BaseGrantaNotificationListener):
+
     _model = Instance(ExampleNotificationListenerModel)
-    _mi = Any()
+
     _names = List()
+
     _values = List()
 
     def deliver(self, event):
@@ -25,14 +29,14 @@ class ExampleNotificationListener(BaseNotificationListener):
         elif isinstance(event, MCOProgressEvent):
             self._values.append(list(event.input + event.output))
         elif isinstance(event, MCOFinishEvent):
-            self._submit_data(self._values)
+            self._submit_data()
         else:
             pass
 
-    def _submit_data(self, values):
+    def _submit_data(self):
         """Submits the data to the GRANTA database"""
         model = self._model
-        table = self._mi.get_db(db_key=model.db_key).get_table(
+        table = self._mi.get_db(db_key=self.db_key).get_table(
             model.table_name)
 
         curtime = datetime.datetime.now()
@@ -68,16 +72,12 @@ class ExampleNotificationListener(BaseNotificationListener):
                     point,
                     parent,
                     data,
-                    subset_names=[self._model.subset_name]
+                    subset_names=[model.subset_name]
                 )
 
     def initialize(self, model):
+        super().initialize(self, model)
         self._model = model
-        self._mi = granta.MI(
-            model.url,
-            user_name=model.login,
-            password=model.password,
-            domain=model.domain)
 
     def finalize(self):
         self._model = None

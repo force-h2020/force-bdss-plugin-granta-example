@@ -2,7 +2,6 @@ from force_bdss.api import BaseExtensionPlugin, plugin_id
 
 from .example_notification_listener import ExampleNotificationListenerFactory
 from .example_data_source import ExampleDataSourceFactory
-from .granta_notification_listener import GrantaNotificationListenerFactory
 
 PLUGIN_VERSION = 0
 
@@ -24,6 +23,5 @@ class GrantaPlugin(BaseExtensionPlugin):
     def get_factory_classes(self):
         return [
             ExampleDataSourceFactory,
-            ExampleNotificationListenerFactory,
-            GrantaNotificationListenerFactory
+            ExampleNotificationListenerFactory
         ]
