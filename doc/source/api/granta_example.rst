@@ -15,7 +15,7 @@ Submodules
 granta\_example\.example\_plugin module
 ---------------------------------------
 
-.. automodule:: granta_example.example_plugin
+.. automodule:: granta_example.granta_plugin
     :members:
     :undoc-members:
     :show-inheritance:
