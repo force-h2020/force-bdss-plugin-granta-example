@@ -38,8 +38,9 @@ class GrantaConnectMixin:
 
         Parameters
         ----------
-        model: BaseGrantaNotificationListenerModel
-            Model associated with this class
+        model: GrantaAuthMixin
+            Object that inherits from GrantaAuthMixin and thereby
+            provides access information to a database
         """
         self._mi = granta.MI(
             model.url,

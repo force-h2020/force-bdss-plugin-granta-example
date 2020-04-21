@@ -21,6 +21,13 @@ class BaseGrantaNotificationListener(
     connecting to a Granta MI database"""
 
     def initialize(self, model):
+        """Initializes a session with a Granta MI database
+
+        Parameters
+        ----------
+        model: BaseGrantaNotificationListenerModel
+            Model associated with this class
+        """
         self._connect_mi(model)
 
 
