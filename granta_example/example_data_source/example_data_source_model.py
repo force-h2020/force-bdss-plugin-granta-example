@@ -1,10 +1,11 @@
-from traits.api import Int, Unicode, Password, on_trait_change
+from traits.api import Int, Unicode, on_trait_change
 from traitsui.api import View, Item
 
-from force_bdss.api import BaseDataSourceModel
+from granta_example.core.base_classes import (
+    BaseGrantaDataSourceModel)
 
 
-class ExampleDataSourceModel(BaseDataSourceModel):
+class ExampleDataSourceModel(BaseGrantaDataSourceModel):
     """This model contains the data that the data source
     needs to perform its work. It is information that is
     outside the pipeline system. Example of this information
@@ -13,15 +14,12 @@ class ExampleDataSourceModel(BaseDataSourceModel):
     your workflow and do not change as the workflow is computed.
     """
 
-    url = Unicode("https://212.44.35.85/mi_servicelayer/")
-    login = Unicode()
-    password = Password()
-    domain = Unicode()
     attribute_name = Unicode("PRESSURE")
+
     row = Int(1)
+
     column = Int(1)
 
-    db_key = Unicode('MI_Force')
     source_data_table_name = Unicode('Source Data')
 
     cuba_type_out = Unicode("PRESSURE")

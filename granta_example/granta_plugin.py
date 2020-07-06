@@ -6,7 +6,7 @@ from .example_data_source import ExampleDataSourceFactory
 PLUGIN_VERSION = 0
 
 
-class ExamplePlugin(BaseExtensionPlugin):
+class GrantaPlugin(BaseExtensionPlugin):
     """
     """
     id = plugin_id("granta", "granta_example", PLUGIN_VERSION)
