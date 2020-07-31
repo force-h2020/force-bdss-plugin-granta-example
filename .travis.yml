@@ -7,7 +7,7 @@ before_install:
     - cd ${HOME}
     - ccache -s
     - export PATH=/usr/lib/ccache:${PATH}
-    - wget https://package-data.enthought.com/edm/rh6_x86_64/2.1/edm_2.1.0_linux_x86_64.sh && bash ./edm_2.1.0_linux_x86_64.sh -b -f -p $HOME
+    - wget https://package-data.enthought.com/edm/rh6_x86_64/2.1/edm_cli_2.1.0_linux_x86_64.sh && bash ./edm_cli_2.1.0_linux_x86_64.sh -b -f -p $HOME
     - export PATH=${HOME}/edm/bin:${PATH}
     - cp edm.yaml $HOME/.edm.yaml
     - edm install -y click setuptools
