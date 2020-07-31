@@ -12,9 +12,12 @@ from granta_example.core.granta_mixin_classes import (
     GrantaAuthMixin, GrantaConnectMixin)
 
 
-class GrantaLoginModel(GrantaAuthMixin, GrantaConnectMixin, HasStrictTraits):
+class GrantaLoginModel(GrantaConnectMixin, GrantaAuthMixin, HasStrictTraits):
 
     def test_connection(self):
+        """ Attempts to connect to GrantaMI database and handles
+        any errors that are raised
+        """
         try:
             self._connect_mi(self)
         except Exception as err:
@@ -72,8 +75,7 @@ class GrantaLoginView(ModelView):
     def close(self, info, is_ok):
         """Test connection to database upon closure of UI."""
 
-        # Don't perform any actions if the user clicks "Cancel"
-        if not is_ok:
-            return True
-
-        return self.can_connect()
+        # Only perform action if the user clicks "OK"
+        if is_ok:
+            return self.can_connect()
+        return True

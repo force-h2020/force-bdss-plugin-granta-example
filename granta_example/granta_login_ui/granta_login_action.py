@@ -22,6 +22,9 @@ class GrantaLoginAction(TaskAction):
 
     login_model = Instance(GrantaLoginModel)
 
+    def _login_model_default(self):
+        return GrantaLoginModel()
+
     def perform(self, event=None):
         """Opens a dialog to login to a GrantaMI database.
 
