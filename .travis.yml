@@ -1,4 +1,9 @@
-language: c
+language: generic
+os: linux
+dist: bionic
+services:
+  - xvfb
+
 cache:
   directories:
       - "$HOME/.cache"

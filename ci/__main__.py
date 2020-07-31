@@ -6,6 +6,7 @@ DEFAULT_PYTHON_VERSION = "3.6"
 PYTHON_VERSIONS = ["3.6"]
 
 ADDITIONAL_CORE_DEPS = [
+    'pyface>=7.0.0-3'
     'requests==2.18.4-1'
 ]
 
