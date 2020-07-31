@@ -7,7 +7,8 @@ from traits.api import List
 
 from force_bdss.api import BaseExtensionPlugin, plugin_id
 
-from granta_example.granta_login_ui.granta_login_action import GrantaLoginAction
+from granta_example.granta_login_ui.granta_login_action import (
+    GrantaLoginAction)
 
 from .example_notification_listener import ExampleNotificationListenerFactory
 from .example_data_source import ExampleDataSourceFactory
