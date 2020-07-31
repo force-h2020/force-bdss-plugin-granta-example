@@ -9,7 +9,6 @@ from granta_example.granta_login_ui.granta_login_view import (
 GRANTA_CONNECT_PATH = (
     'granta_example.core.granta_mixin_classes'
     '.GrantaConnectMixin._connect_mi')
-DIALOG_PATH = 'pyface.message_dialog.error'
 
 
 def mock_connect_error(self):
@@ -46,6 +45,7 @@ class TestGrantaLoginView(TestCase):
 
             mock_connect.side_effect = mock_connect_error
 
-            with mock.patch(DIALOG_PATH) as mock_dialog:
+            with mock.patch.object(
+                    GrantaLoginView, '_display_error') as mock_dialog:
                 self.assertFalse(self.view.can_connect())
                 mock_dialog.assert_called()

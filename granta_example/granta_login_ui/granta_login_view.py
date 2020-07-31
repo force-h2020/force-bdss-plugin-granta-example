@@ -56,6 +56,10 @@ class GrantaLoginView(ModelView):
 
         return view
 
+    def _display_error(self, msg):
+        dlg = MessageDialog()
+        dlg.error(msg)
+
     def can_connect(self):
         """Test connection to database and display a dialog message if
         any errors are raised
@@ -67,9 +71,7 @@ class GrantaLoginView(ModelView):
         """
         can_connect, conn_or_error = self.model.test_connection()
         if not can_connect:
-            dlg = MessageDialog()
-            dlg.error(str(conn_or_error))
-
+            self._display_error(str(conn_or_error))
         return can_connect
 
     def close(self, info, is_ok):
