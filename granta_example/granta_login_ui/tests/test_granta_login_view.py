@@ -9,7 +9,7 @@ from granta_example.granta_login_ui.granta_login_view import (
 GRANTA_CONNECT_PATH = (
     'granta_example.core.granta_mixin_classes'
     '.GrantaConnectMixin._connect_mi')
-DIALOG_PATH = 'pyface.api.MessageDialog.error'
+DIALOG_PATH = 'pyface.message_dialog.error'
 
 
 def mock_connect_error(self):
