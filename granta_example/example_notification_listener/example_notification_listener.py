@@ -36,7 +36,7 @@ class ExampleNotificationListener(BaseGrantaNotificationListener):
     def _submit_data(self):
         """Submits the data to the GRANTA database"""
         model = self._model
-        table = self._mi.get_db(db_key=self.db_key).get_table(
+        table = self._mi.get_db(db_key=model.db_key).get_table(
             model.table_name)
 
         curtime = datetime.datetime.now()

@@ -1,7 +1,7 @@
 #  (C) Copyright 2010-2020 Enthought, Inc., Austin, TX
 #  All rights reserved.
 
-from traits.api import Any, Str
+from traits.api import Any
 
 from force_bdss.api import (
     BaseDataSourceModel,
@@ -22,9 +22,6 @@ class BaseGrantaNotificationListener(BaseNotificationListener):
     #: Reference to the GrantaMI session
     _mi = Any()
 
-    #: Key reference to the database to connect to
-    _db_key = Str()
-
     def initialize(self, model):
         """Initializes a session with a Granta MI database
 
@@ -34,7 +31,6 @@ class BaseGrantaNotificationListener(BaseNotificationListener):
             Model associated with this class
         """
         self._mi = create_session(model)
-        self._db_key = model.db_key
 
 
 class BaseGrantaNotificationListenerModel(
