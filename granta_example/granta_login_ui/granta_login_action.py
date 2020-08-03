@@ -5,7 +5,7 @@ from pyface.api import information
 from pyface.tasks.action.api import TaskAction
 from traits.api import Instance
 
-from .granta_login_view import GrantaLoginModel, GrantaLoginView
+from .granta_login_view import GrantaLoginView
 from .granta_session_manager import GrantaSessionManager
 
 

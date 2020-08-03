@@ -3,7 +3,7 @@
 
 import granta
 
-from traits.api import HasStrictTraits, Any, Str, Password
+from traits.api import HasStrictTraits, Str, Password
 
 
 class GrantaAuthMixin(HasStrictTraits):
