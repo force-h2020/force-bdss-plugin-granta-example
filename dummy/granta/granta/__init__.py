@@ -18,4 +18,3 @@ def connect(*args, **kwargs):
     returning a session object
     """
     return DummyGrantaSession()
-
