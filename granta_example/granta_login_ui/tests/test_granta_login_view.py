@@ -6,12 +6,10 @@ from unittest import TestCase, mock
 from granta_example.granta_login_ui.granta_login_view import (
     GrantaLoginModel, GrantaLoginView)
 
-GRANTA_CONNECT_PATH = (
-    'granta_example.core.granta_mixin_classes'
-    '.GrantaConnectMixin._connect_mi')
+GRANTA_CONNECT_PATH = 'granta.connect'
 
 
-def mock_connect_error(self):
+def mock_connect_error(*args, **kwargs):
     raise ConnectionError('Connection failed')
 
 
@@ -21,11 +19,11 @@ class TestGrantaLoginModel(TestCase):
         self.model = GrantaLoginModel()
 
     def test_test_connection(self):
-        with mock.patch(GRANTA_CONNECT_PATH) as mock_connect:
-            check, error = self.model.test_connection()
-            self.assertTrue(check)
-            self.assertIsNone(error)
+        check, error = self.model.test_connection()
+        self.assertTrue(check)
+        self.assertIsNone(error)
 
+        with mock.patch(GRANTA_CONNECT_PATH) as mock_connect:
             mock_connect.side_effect = mock_connect_error
 
             check, error = self.model.test_connection()
@@ -40,9 +38,9 @@ class TestGrantaLoginView(TestCase):
         self.view = GrantaLoginView(model=self.model)
 
     def test_can_connect(self):
-        with mock.patch(GRANTA_CONNECT_PATH) as mock_connect:
-            self.assertTrue(self.view.can_connect())
+        self.assertTrue(self.view.can_connect())
 
+        with mock.patch(GRANTA_CONNECT_PATH) as mock_connect:
             mock_connect.side_effect = mock_connect_error
 
             with mock.patch.object(
