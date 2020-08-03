@@ -2,24 +2,23 @@
 #  All rights reserved.
 
 from traits.api import Instance
-from traits.has_traits import HasStrictTraits
 from traitsui.api import (
     Item, ModelView, Spring, TextEditor, UItem, VGroup, View
 )
 from pyface.api import MessageDialog
 
 from granta_example.core.granta_mixin_classes import (
-    GrantaAuthMixin, GrantaConnectMixin)
+    GrantaAuthMixin, create_session)
 
 
-class GrantaLoginModel(GrantaConnectMixin, GrantaAuthMixin, HasStrictTraits):
+class GrantaLoginModel(GrantaAuthMixin):
 
     def test_connection(self):
         """ Attempts to connect to GrantaMI database and handles
         any errors that are raised
         """
         try:
-            self._connect_mi(self)
+            create_session(self)
         except Exception as err:
             return False, err
         return True, None

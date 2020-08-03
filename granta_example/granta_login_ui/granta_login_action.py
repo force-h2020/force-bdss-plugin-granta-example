@@ -6,6 +6,7 @@ from pyface.tasks.action.api import TaskAction
 from traits.api import Instance
 
 from .granta_login_view import GrantaLoginModel, GrantaLoginView
+from .granta_session_manager import GrantaSessionManager
 
 
 class GrantaLoginAction(TaskAction):
@@ -20,10 +21,7 @@ class GrantaLoginAction(TaskAction):
     #: Unique ID for the action.
     id = 'GrantaLogin'
 
-    login_model = Instance(GrantaLoginModel)
-
-    def _login_model_default(self):
-        return GrantaLoginModel()
+    session_manager = Instance(GrantaSessionManager)
 
     def perform(self, event=None):
         """Opens a dialog to login to a GrantaMI database.
@@ -33,7 +31,8 @@ class GrantaLoginAction(TaskAction):
         event : ActionEvent instance
             The event that triggered the action.
         """
-        database_login = GrantaLoginView(model=self.login_model)
+        model = self.session_manager.login_model
+        database_login = GrantaLoginView(model=model)
 
         parent = self.task.window.control
         success = database_login.edit_traits(
@@ -43,6 +42,7 @@ class GrantaLoginAction(TaskAction):
         if not success:
             return
 
+        self.session_manager.update_session()
         msg = (
             'Connection to GrantaMI sucessful. '
         )
