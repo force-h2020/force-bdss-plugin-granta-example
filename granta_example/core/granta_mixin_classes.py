@@ -1,9 +1,12 @@
+#  (C) Copyright 2010-2020 Enthought, Inc., Austin, TX
+#  All rights reserved.
+
 import granta
 
-from traits.api import Any, Str, Password
+from traits.api import HasStrictTraits, Str, Password
 
 
-class GrantaAuthMixin:
+class GrantaAuthMixin(HasStrictTraits):
     """Mixin class containing traits required for authentication
     to a Granta MI database
     """
@@ -24,27 +27,19 @@ class GrantaAuthMixin:
     db_key = Str('MI_Force')
 
 
-class GrantaConnectMixin:
+def create_session(model):
+    """Sets up a Granta MI database session using authentication
+    details in model
 
-    #: Reference to the GrantaMI session
-    _mi = Any()
-
-    #: Key reference to the database to connect to
-    _db_key = Str()
-
-    def _connect_mi(self, model):
-        """Sets up a Granta MI database session using authentication
-        details in model
-
-        Parameters
-        ----------
-        model: GrantaAuthMixin
-            Object that inherits from GrantaAuthMixin and thereby
-            provides access information to a database
-        """
-        self._mi = granta.MI(
-            model.url,
-            user_name=model.login,
-            password=model.password,
-            domain=model.domain)
-        self._db_key = model.db_key
+    Parameters
+    ----------
+    model: GrantaAuthMixin
+        Object that inherits from GrantaAuthMixin and thereby
+        provides access information to a database
+    """
+    return granta.connect(
+        model.url,
+        user_name=model.login,
+        password=model.password,
+        domain=model.domain
+    )

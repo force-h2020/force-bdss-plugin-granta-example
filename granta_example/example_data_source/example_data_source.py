@@ -1,13 +1,11 @@
 import logging
 
-from force_bdss.api import Slot
-
-from granta_example.core.base_classes import BaseGrantaDataSource
+from force_bdss.api import Slot, BaseDataSource
 
 logger = logging.getLogger(__name__)
 
 
-class ExampleDataSource(BaseGrantaDataSource):
+class ExampleDataSource(BaseDataSource):
 
     def run(self, model, parameters):
         raise NotImplementedError("Executing ExampleDataSource. "
